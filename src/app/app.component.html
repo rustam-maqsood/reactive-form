@@ -1,0 +1,55 @@
+<div class="form">
+    <h2 id="registration">Registration Form</h2>
+    <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="personalDetails">
+            <label for="fname">First Name</label>
+        <input type="text" id="fname" placeholder="Your Name.." formControlName="firstname">
+        <small
+         *ngIf="reactiveForm.get('personalDetails.firstname').errors?.['required']">
+         First Name is the required field</small>
+        <small 
+         *ngIf="reactiveForm.get('personalDetails.firstname').errors?.['noSpaceAllowed']">
+         First NAme can not contain a space</small>
+         <br>
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" placeholder="Your Last Name.." formControlName="lastname">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Your Last email.." formControlName="email">
+       <div>
+        <span style="color: red;"
+        *ngIf="!reactiveForm.get('personalDetails.email').valid && reactiveForm.get('personalDetails.email').touched">The Email you entered is not a Valid Email</span>
+       </div>
+        </div>
+        <label for="country">Country</label>
+        <select id="country" formControlName="country">
+            <option value="australia">Australia</option>
+            <option value="canada">Canada</option>
+            <option value="usa">Usa</option>
+            <option value="india">India</option>
+        </select>
+
+        <label for="gender">Gender</label>
+        <input type="radio" id="male" value="male" formControlName="gender">
+        <label for="male">Male</label>
+        <input type="radio" id="female" value="female"  formControlName="gender">
+        <label for="female">Female</label>
+        <input type="radio" id="other" value="other" formControlName="gender">
+        <label for="other">Other</label>
+        <br><br>
+
+        <label>Hobbies <i>(Optional)</i></label>
+        <div class="form-inline">
+            <label><input type="checkbox" value="sports"  formControlName="hobbies">Sports</label>
+            <label><input type="checkbox" value="movies"  formControlName="hobbies">Movies</label>
+            <label><input type="checkbox" value="music"  formControlName="hobbies">Music</label>
+        </div>
+        <div formArrayName="skills">
+            <ng-container *ngFor="let skill of reactiveForm.get('skills')['controls'];index as i">
+            <input type="text" placeholder="add skill..." formControlName="{{i}}">
+            </ng-container>
+            <button (click)="addskills()">+ Add Skills</button>
+        </div>
+        <input type="submit" value="Submit" id="btn" >
+    </form>
+</div>
